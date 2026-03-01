@@ -22,9 +22,9 @@ namespace A_EstrellaV2
         public static void ForAtoM()
         {
             PointXY actual = new PointXY(0, 0);
-            PointXY meta = new PointXY(3, 1);
+            PointXY meta = new PointXY(0, 4);
             PointXY[] obstaculos = [ //Falta ver como comparar varios puntos
-                new PointXY(0, 2)
+                new PointXY(0, 4)
                 ];
             System.Diagnostics.Debug.WriteLine("\n---------------------------------------------------------");
 
@@ -35,7 +35,7 @@ namespace A_EstrellaV2
                 while (true)
                 {
                     // El ciclo se ejecuta  hasta que Y llega  o pasa la meta
-                    if (y == meta.y) break; // Rompiendo el bucle omitiendo todo lo demás 
+                    if (y == meta.y || y > 4) break; // Rompiendo el bucle omitiendo todo lo demás 
                     // Omitimos la ultima iteración ya que tambien la muestra X
                     System.Diagnostics.Debug.WriteLine("[" + x + ", " + y + "]y");
 
@@ -54,7 +54,7 @@ namespace A_EstrellaV2
                 while (true)
                 {
                     // Al ir para atrás, lo rompe cuando Y sea igual o menor a la meta
-                    if (y == meta.y) break;
+                    if (y == meta.y || y < 4) break;
                     System.Diagnostics.Debug.WriteLine("[" + x + ", " + y + "]y-");
                     if (x == obstaculos[0].x && y + 1 == obstaculos[0].y)
                     { // Se desvia hacia la izquierda en caso de obstaculo
@@ -74,7 +74,7 @@ namespace A_EstrellaV2
                 while (true)
                 {
                     System.Diagnostics.Debug.WriteLine("[" + x + ", " + y + "]x");
-                    if (x == meta.x) break;
+                    if (x == meta.x || x > 4) break;
                     else if (x + 1 == obstaculos[0].x && y == obstaculos[0].y)
                     {
                         y--;// Se desvía hacia arriba para evitar el obstaculo
@@ -91,7 +91,7 @@ namespace A_EstrellaV2
                 while (true) // -x
                 {
                     System.Diagnostics.Debug.WriteLine("[" + x + ", " + y + "]x-");
-                    if (x == meta.x) break;
+                    if (x == meta.x || x < 4) break;
                     else if (x - 1 == obstaculos[0].x && y == obstaculos[0].y)
                     {
                         y++;// Desviamos para abajo
