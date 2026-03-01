@@ -22,45 +22,94 @@ namespace A_EstrellaV2
         public static void ForAtoM()
         {
             PointXY actual = new PointXY(0, 0);
-            PointXY meta = new PointXY(0, 4);
-            PointXY[] obstaculos = [
-                new PointXY(0, 2),
-                new PointXY(4, 2)
+            PointXY meta = new PointXY(3, 1);
+            PointXY[] obstaculos = [ //Falta ver como comparar varios puntos
+                new PointXY(0, 2)
                 ];
-            System.Diagnostics.Debug.WriteLine("\n---------------------------------------------------------\n");
+            System.Diagnostics.Debug.WriteLine("\n---------------------------------------------------------");
 
             int x = actual.x;
             int y = actual.y;
-            while (y < meta.y)
-            {
-                System.Diagnostics.Debug.WriteLine("1.- " + x + " " + y + "\n");
-                if (x == obstaculos[0].x && y + 1 == obstaculos[0].y)
+            if (actual.y < meta.y)
+            {// 1.- Si Yactual es menor que Ymeta; se sigue con normalidad
+                while (true)
                 {
-                    x++;
-                }
-                else
-                {
-                    y++;
+                    // El ciclo se ejecuta  hasta que Y llega  o pasa la meta
+                    if (y == meta.y) break; // Rompiendo el bucle omitiendo todo lo demás 
+                    // Omitimos la ultima iteración ya que tambien la muestra X
+                    System.Diagnostics.Debug.WriteLine("[" + x + ", " + y + "]y");
+
+                    if (x == obstaculos[0].x && y + 1 == obstaculos[0].y)
+                    { //Si hay un obstaculo en el siguiente paso se desvía a la derecha
+                        x++;
+                    }
+                    else
+                    { // Se va para abajo
+                        y++;
+                    }
                 }
             }
-
-            if (x < meta.x)
-            {// Lo mismo de arriba pero con X
-                while (x <= meta.x)
+            else
+            {// Si Yactual es mayor que Ymeta; se va pa atrás
+                while (true)
                 {
-                    System.Diagnostics.Debug.WriteLine("2.- " + x + " " + y + "\n");
-                    x++;
+                    // Al ir para atrás, lo rompe cuando Y sea igual o menor a la meta
+                    if (y == meta.y) break;
+                    System.Diagnostics.Debug.WriteLine("[" + x + ", " + y + "]y-");
+                    if (x == obstaculos[0].x && y + 1 == obstaculos[0].y)
+                    { // Se desvia hacia la izquierda en caso de obstaculo
+                        x--;
+                    }
+                    else
+                    { // Vamos para abajo
+                        y--;
+                    }
+                }
+            }// Terminamos el recorrido de Y evitando obstaculos
+
+            // Al ya haber concluido el recorrido de Y, debemos contar cuantas casillas se desvía
+            int movY = 0; // Para al final regresarlo esas casillas
+            if (x < meta.x)
+            {// Lo mismo de 1.- pero con X
+                while (true)
+                {
+                    System.Diagnostics.Debug.WriteLine("[" + x + ", " + y + "]x");
+                    if (x == meta.x) break;
+                    else if (x + 1 == obstaculos[0].x && y == obstaculos[0].y)
+                    {
+                        y--;// Se desvía hacia arriba para evitar el obstaculo
+                        movY++;// Registramos que se desvió una vez
+                    }
+                    else
+                    { // Vamos pa la derecha
+                        x++;
+                    }
                 }
             }
             else
             {
-                while (x >= meta.x)
+                while (true) // -x
                 {
-                    System.Diagnostics.Debug.WriteLine("2.- " + x + " " + y + "\n");
-                    x--;
+                    System.Diagnostics.Debug.WriteLine("[" + x + ", " + y + "]x-");
+                    if (x == meta.x) break;
+                    else if (x - 1 == obstaculos[0].x && y == obstaculos[0].y)
+                    {
+                        y++;// Desviamos para abajo
+                        movY++;
+                    }
+                    else
+                    {
+                        x--;// Vamos a la izquierda
+                    }
                 }
             }
+            if (movY > 0)// Si se desvia al menos una vez
+            { // Lo regresamos
+                System.Diagnostics.Debug.WriteLine("[" + x + ", " + (y + movY) + "]movY");
+            }
 
+            //Falta meter la formula (ni idea de que sea f(n)
+            System.Diagnostics.Debug.WriteLine("---------------------------------------------------------\n");
             /*
             int[] actual = [0, 0];
             int[] meta = [4, 4];
