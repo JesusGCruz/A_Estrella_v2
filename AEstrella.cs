@@ -12,7 +12,7 @@ namespace A_EstrellaV2
         {
             int[] actual = [0, 0];
             int[] meta = [4, 4];
-            string res = "";
+            string res = "\n---------------------------------------------------------";
             // Primero nos vamos en Y
             int y = actual[1];
             if (actual[1] < meta[1])
