@@ -68,12 +68,8 @@ namespace A_EstrellaV2
 
         private void btnInicio_Click(object sender, EventArgs e)
         {
-            
-            AEstrella.ForAtoM();
-
-            
-
             int xActual = 0, yActual = 0, xMeta = 0, yMeta = 0;
+            List<PointXY> obstaculos = new List<PointXY>();
 
             for (int i = 1; i <= 25; i++)
             {
@@ -82,26 +78,29 @@ namespace A_EstrellaV2
                 {
                     if (btn.Tag.ToString() == "Inicio") { xActual = (i - 1) % 5; yActual = (i - 1) / 5; }
                     if (btn.Tag.ToString() == "Fin") { xMeta = (i - 1) % 5; yMeta = (i - 1) / 5; }
+                    if (btn.Tag.ToString() == "Bomb")// Extraemos las coordenadas de los obstáculos
+                    {
+                        //obs.Add(new PointXY((i - 1) % 5, (i - 1) / 5));
+                    }
                     if (btn.BackColor == Color.Green) btn.BackColor = Color.White;
                 }
             }
 
-           //* RECORRIDO
-            PintarRecorrido(xActual, yActual, xMeta, yMeta);
+            //* RECORRIDO
+            obstaculos.Add(new PointXY(0, 3)); // Obstáculos hardcodeados temporalmente, espero
+            PintarRecorrido(xActual, yActual, xMeta, yMeta, obstaculos);
         }
 
-        private void PintarRecorrido(int xA, int yA, int xM, int yM)
+        private void PintarRecorrido(int xA, int yA, int xM, int yM, List<PointXY> obstaculos)
         {
-            int x = xA;
-            int y = yA;
-
-            
-            if (yA < yM) { while (y < yM) { AplicarColor(x, y); y++; } }
-            else { while (y > yM) { AplicarColor(x, y); y--; } }
-
-            // Luego en X
-            if (xA < xM) { while (x <= xM) { AplicarColor(x, yM); x++; } }
-            else { while (x >= xM) { AplicarColor(x, yM); x--; } }
+            // Mandamos a traer al algoritmo A* para que nos dé las coordenadas del recorrido
+            List<List<int>> recorrido = AEstrella.ForAtoM(xA, yA, xM, yM, obstaculos);
+            // Pintamos las casillas recibidas
+            for (int i = 0; i < recorrido[0].Count; i++)
+            {
+                // En el recorrido, la posición 0 son las X, la posición 1 son las Y
+                AplicarColor(recorrido[0][i], recorrido[1][i]);
+            }
         }
 
         private void AplicarColor(int x, int y)

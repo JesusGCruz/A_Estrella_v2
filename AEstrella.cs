@@ -8,36 +8,28 @@ namespace A_EstrellaV2
 {
     internal class AEstrella
     {
-        public class PointXY
+        public static List<List<int>> ForAtoM(int xA, int yA, int xM, int yM, List<PointXY> obstaculos)
         {
-            public int x { get; set; }
-            public int y { get; set; }
-
-            public PointXY(int x, int y)
-            {
-                this.x = x;
-                this.y = y;
-            }
-        }
-        public static void ForAtoM()
-        {
-            PointXY actual = new PointXY(0, 0);
-            PointXY meta = new PointXY(0, 4);
-            PointXY[] obstaculos = [ //Falta ver como comparar varios puntos
-                new PointXY(0, 4)
-                ];
+            //System.Diagnostics.Debug.WriteLine("ent: " + xA + " " + yA + " " + xM + " " + yM);
+            //PointXY actual = new PointXY(0, 0);
+            //PointXY meta = new PointXY(0, 4);
+            List<List<int>> recorrido = new List<List<int>>();
+            List<int> Xs = new List<int>();
+            List<int> Ys = new List<int>();
             System.Diagnostics.Debug.WriteLine("\n---------------------------------------------------------");
 
-            int x = actual.x;
-            int y = actual.y;
-            if (actual.y < meta.y)
+            int x = xA;
+            int y = yA;
+            if (yA < yM)
             {// 1.- Si Yactual es menor que Ymeta; se sigue con normalidad
                 while (true)
                 {
                     // El ciclo se ejecuta  hasta que Y llega  o pasa la meta
-                    if (y == meta.y || y > 4) break; // Rompiendo el bucle omitiendo todo lo demás 
+                    if (y == yM || y > 4) break; // Rompiendo el bucle omitiendo todo lo demás 
                     // Omitimos la ultima iteración ya que tambien la muestra X
                     System.Diagnostics.Debug.WriteLine("[" + x + ", " + y + "]y");
+                    Xs.Add(x);
+                    Ys.Add(y);
 
                     if (x == obstaculos[0].x && y + 1 == obstaculos[0].y)
                     { //Si hay un obstaculo en el siguiente paso se desvía a la derecha
@@ -54,8 +46,10 @@ namespace A_EstrellaV2
                 while (true)
                 {
                     // Al ir para atrás, lo rompe cuando Y sea igual o menor a la meta
-                    if (y == meta.y || y < 4) break;
+                    if (y == yM || y < 0) break;
                     System.Diagnostics.Debug.WriteLine("[" + x + ", " + y + "]y-");
+                    Xs.Add(x);
+                    Ys.Add(y);
                     if (x == obstaculos[0].x && y + 1 == obstaculos[0].y)
                     { // Se desvia hacia la izquierda en caso de obstaculo
                         x--;
@@ -69,12 +63,14 @@ namespace A_EstrellaV2
 
             // Al ya haber concluido el recorrido de Y, debemos contar cuantas casillas se desvía
             int movY = 0; // Para al final regresarlo esas casillas
-            if (x < meta.x)
+            if (x < xM)
             {// Lo mismo de 1.- pero con X
                 while (true)
                 {
                     System.Diagnostics.Debug.WriteLine("[" + x + ", " + y + "]x");
-                    if (x == meta.x || x > 4) break;
+                    Xs.Add(x);
+                    Ys.Add(y);
+                    if (x == xM || x > 4) break;
                     else if (x + 1 == obstaculos[0].x && y == obstaculos[0].y)
                     {
                         y--;// Se desvía hacia arriba para evitar el obstaculo
@@ -91,7 +87,9 @@ namespace A_EstrellaV2
                 while (true) // -x
                 {
                     System.Diagnostics.Debug.WriteLine("[" + x + ", " + y + "]x-");
-                    if (x == meta.x || x < 4) break;
+                    Xs.Add(x);
+                    Ys.Add(y);
+                    if (x == xM || x < 0) break;
                     else if (x - 1 == obstaculos[0].x && y == obstaculos[0].y)
                     {
                         y++;// Desviamos para abajo
@@ -106,53 +104,14 @@ namespace A_EstrellaV2
             if (movY > 0)// Si se desvia al menos una vez
             { // Lo regresamos
                 System.Diagnostics.Debug.WriteLine("[" + x + ", " + (y + movY) + "]movY");
+                Xs.Add(x);
+                Ys.Add(y);
             }
-
-            //Falta meter la formula (ni idea de que sea f(n)
             System.Diagnostics.Debug.WriteLine("---------------------------------------------------------\n");
-            /*
-            int[] actual = [0, 0];
-            int[] meta = [4, 4];
-            string res = "\n---------------------------------------------------------\n";
-            // Primero nos vamos en Y
-            int y = actual[1];
-            if (actual[1] < meta[1])
-            {// Si Yactual es menor que Ymeta; se sigue con normalidad
-                while (y < meta[1])
-                {
-                    res += actual[0] + " " + y + "\n";
-                    y++;
-                }
-            }
-            else
-            {// Si Yactual es mayor que Ymeta; se va pa atrás
-                while (y > meta[1])
-                {
-                    res += actual[0] + " " + y + "\n";
-                    y--;
-                }
-            }
-
-            // Luego nos vamos en X
-            int x = actual[0];
-            if (actual[0] < meta[0])
-            {// Lo mismo de arriba pero con X
-                while (x <= meta[0])
-                {
-                    res += x + " " + meta[1] + "\n";
-                    x++;
-                }
-            }
-            else
-            {
-                while (x >= meta[0])
-                {
-                    res += x + " " + meta[1] + "\n";
-                    x--;
-                }
-            }
-            System.Diagnostics.Debug.WriteLine(res);
-             */
+            recorrido.Add(Xs);
+            recorrido.Add(Ys);
+            return recorrido;
+            //Falta meter la formula (ni idea de que sea f(n)
         }
     }
 }
