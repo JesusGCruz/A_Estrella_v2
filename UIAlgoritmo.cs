@@ -69,7 +69,8 @@ namespace A_EstrellaV2
         private void btnInicio_Click(object sender, EventArgs e)
         {
             int xActual = 0, yActual = 0, xMeta = 0, yMeta = 0;
-            List<PointXY> obstaculos = new List<PointXY>();
+            List<int> xObstaculos = new List<int>();
+            List<int> yObstaculos = new List<int>();
 
             for (int i = 1; i <= 25; i++)
             {
@@ -80,7 +81,8 @@ namespace A_EstrellaV2
                     if (btn.Tag.ToString() == "Fin") { xMeta = (i - 1) % 5; yMeta = (i - 1) / 5; }
                     if (btn.Tag.ToString() == "Bomba")// Extraemos las coordenadas de los obstáculos
                     {
-                        obstaculos.Add(new PointXY((i - 1) % 5, (i - 1) / 5));
+                        xObstaculos.Add((i - 1) % 5);
+                        yObstaculos.Add((i - 1) / 5);
                     }
                     if (btn.BackColor == Color.Green) btn.BackColor = Color.White;
                 }
@@ -88,13 +90,13 @@ namespace A_EstrellaV2
 
             //* RECORRIDO
             //obstaculos.Add(new PointXY(0, 3)); // Obstáculos hardcodeados temporalmente, espero
-            PintarRecorrido(xActual, yActual, xMeta, yMeta, obstaculos);
+            PintarRecorrido(xActual, yActual, xMeta, yMeta, xObstaculos, yObstaculos);
         }
 
-        private void PintarRecorrido(int xA, int yA, int xM, int yM, List<PointXY> obstaculos)
+        private void PintarRecorrido(int xA, int yA, int xM, int yM, List<int> xObstaculos, List<int> yObstaculos)
         {
             // Mandamos a traer al algoritmo A* para que nos dé las coordenadas del recorrido
-            List<List<int>> recorrido = AEstrella.ForAtoM(xA, yA, xM, yM, obstaculos);
+            List<List<int>> recorrido = AEstrella.ForAtoM(xA, yA, xM, yM, xObstaculos, yObstaculos);
             // Pintamos las casillas recibidas
             for (int i = 0; i < recorrido[0].Count; i++)
             {

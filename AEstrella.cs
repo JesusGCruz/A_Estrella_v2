@@ -8,7 +8,7 @@ namespace A_EstrellaV2
 {
     internal class AEstrella
     {
-        public static List<List<int>> ForAtoM(int xA, int yA, int xM, int yM, List<PointXY> obstaculos)
+        public static List<List<int>> ForAtoM(int xA, int yA, int xM, int yM, List<int> xObstaculos, List<int> yObstaculos)
         {
             //System.Diagnostics.Debug.WriteLine("ent: " + xA + " " + yA + " " + xM + " " + yM);
             //PointXY actual = new PointXY(0, 0);
@@ -31,7 +31,9 @@ namespace A_EstrellaV2
                     Xs.Add(x);
                     Ys.Add(y);
 
-                    if (x == obstaculos[0].x && y + 1 == obstaculos[0].y)
+                    //if (x == obstaculos[0].x && y + 1 == obstaculos[0].y)
+                    int temp = xObstaculos.IndexOf(x);
+                    if (temp != -1 && ((y + 1) == yObstaculos[temp]))
                     { //Si hay un obstaculo en el siguiente paso se desvía a la derecha
                         x++;
                     }
@@ -50,7 +52,9 @@ namespace A_EstrellaV2
                     System.Diagnostics.Debug.WriteLine("[" + x + ", " + y + "]y-");
                     Xs.Add(x);
                     Ys.Add(y);
-                    if (x == obstaculos[0].x && y + 1 == obstaculos[0].y)
+                    //if (x == obstaculos[0].x && y + 1 == obstaculos[0].y)
+                    int temp = xObstaculos.IndexOf(x);
+                    if (temp != -1 && ((y - 1) == yObstaculos[temp]))
                     { // Se desvia hacia la izquierda en caso de obstaculo
                         x--;
                     }
@@ -70,8 +74,10 @@ namespace A_EstrellaV2
                     System.Diagnostics.Debug.WriteLine("[" + x + ", " + y + "]x");
                     Xs.Add(x);
                     Ys.Add(y);
+                    int temp = xObstaculos.IndexOf(y);
                     if (x == xM || x > 4) break;
-                    else if (x + 1 == obstaculos[0].x && y == obstaculos[0].y)
+                    //else if (x + 1 == obstaculos[0].x && y == obstaculos[0].y)
+                    else if (temp != -1 && ((x + 1) == xObstaculos[temp]))
                     {
                         y--;// Se desvía hacia arriba para evitar el obstaculo
                         movY++;// Registramos que se desvió una vez
@@ -89,8 +95,10 @@ namespace A_EstrellaV2
                     System.Diagnostics.Debug.WriteLine("[" + x + ", " + y + "]x-");
                     Xs.Add(x);
                     Ys.Add(y);
+                    int temp = xObstaculos.IndexOf(y);
                     if (x == xM || x < 0) break;
-                    else if (x - 1 == obstaculos[0].x && y == obstaculos[0].y)
+                    //else if (x - 1 == obstaculos[0].x && y == obstaculos[0].y)
+                    else if (temp != -1 && ((x - 1) == xObstaculos[temp]))
                     {
                         y++;// Desviamos para abajo
                         movY++;
@@ -119,7 +127,7 @@ namespace A_EstrellaV2
             //h(n) = |xActual - xMeta| + |yActual - yMeta|
             int obstaculo_g = x + 1;
             int h = Math.Abs(x - xM) + Math.Abs(y - yM);
-            int f = obstaculo_g + h;     
+            int f = obstaculo_g + h;
         }
     }
 }
