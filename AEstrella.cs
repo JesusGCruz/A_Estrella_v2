@@ -111,7 +111,15 @@ namespace A_EstrellaV2
             recorrido.Add(Xs);
             recorrido.Add(Ys);
             return recorrido;
-            //Falta meter la formula (ni idea de que sea f(n)
+
+
+            //Falta meter la formula (ni idea de que sea f(n) JANE
+            //g es el coste del camino en timepo real desde el nodo inicial hasta el nodo n TT
+            //f(n) = g(n) + h(n)
+            //h(n) = |xActual - xMeta| + |yActual - yMeta|
+            int obstaculo_g = x + 1;
+            int h = Math.Abs(x - xM) + Math.Abs(y - yM);
+            int f = obstaculo_g + h;     
         }
     }
 }

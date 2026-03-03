@@ -78,16 +78,16 @@ namespace A_EstrellaV2
                 {
                     if (btn.Tag.ToString() == "Inicio") { xActual = (i - 1) % 5; yActual = (i - 1) / 5; }
                     if (btn.Tag.ToString() == "Fin") { xMeta = (i - 1) % 5; yMeta = (i - 1) / 5; }
-                    if (btn.Tag.ToString() == "Bomb")// Extraemos las coordenadas de los obstáculos
+                    if (btn.Tag.ToString() == "Bomba")// Extraemos las coordenadas de los obstáculos
                     {
-                        //obs.Add(new PointXY((i - 1) % 5, (i - 1) / 5));
+                        obstaculos.Add(new PointXY((i - 1) % 5, (i - 1) / 5));
                     }
                     if (btn.BackColor == Color.Green) btn.BackColor = Color.White;
                 }
             }
 
             //* RECORRIDO
-            obstaculos.Add(new PointXY(0, 3)); // Obstáculos hardcodeados temporalmente, espero
+            //obstaculos.Add(new PointXY(0, 3)); // Obstáculos hardcodeados temporalmente, espero
             PintarRecorrido(xActual, yActual, xMeta, yMeta, obstaculos);
         }
 
@@ -121,6 +121,11 @@ namespace A_EstrellaV2
         {
             ordenClic = 0;
             ConfigurarTablero();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }
