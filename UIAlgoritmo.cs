@@ -96,7 +96,7 @@ namespace A_EstrellaV2
         private void PintarRecorrido(int xA, int yA, int xM, int yM, List<int> xObstaculos, List<int> yObstaculos)
         {
             // Mandamos a traer al algoritmo A* para que nos dé las coordenadas del recorrido
-            List<List<int>> recorrido = AEstrella.ForAtoM(xA, yA, xM, yM, xObstaculos, yObstaculos);
+            List<List<int>> recorrido = AEstrella.ForAtoM(xA, yA, xM, yM, xObstaculos, yObstaculos, lblF);
             // Pintamos las casillas recibidas
             for (int i = 0; i < recorrido[0].Count; i++)
             {
@@ -129,5 +129,7 @@ namespace A_EstrellaV2
         {
             this.Close();
         }
+
+        
     }
 }
